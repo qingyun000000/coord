@@ -14,6 +14,11 @@ public class CreateNodeRequest {
     private String coordUrl;
     
     /**
+     * 组（只有同组的客户端才对组内的数据可见）
+     */
+    private String group;
+    
+    /**
      * TREE_NODE模式，父节点路径
      */
     private String parent;
@@ -39,6 +44,14 @@ public class CreateNodeRequest {
 
     public void setCoordUrl(String coordUrl) {
         this.coordUrl = coordUrl;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public String getParent() {

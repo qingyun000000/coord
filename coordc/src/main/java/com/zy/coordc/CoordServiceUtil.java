@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * 协调器服务
  * @author wuhailong
  */
-public class CoordService {
+public class CoordServiceUtil {
     
     /**
      * 客户端注册
@@ -42,7 +42,7 @@ public class CoordService {
         }
         
         Map<String, String> params = new HashMap<>();
-        
+        params.put("group", request.getGroup());
         
         String result = HttpUtil.doPost(request.getCoordUrl() + "/regist", params);
         ServiceResult serviceResult = JSON.parseObject(result, ServiceResult.class);
@@ -58,7 +58,7 @@ public class CoordService {
                     heartbeat(request1);
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(CoordService.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CoordServiceUtil.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
