@@ -169,7 +169,7 @@ public class CoordServiceUtil {
         params.put("nodeKey", request.getNodeKey());
         params.put("nodeValue", request.getNodeValue());
         
-        HttpUtil.doPost(request.getCoordUrl() + "/createTemporaryNode", params);
+        HttpUtil.doPost(request.getCoordUrl() + "/updateNode", params);
         return null;
     }
     
@@ -179,14 +179,13 @@ public class CoordServiceUtil {
      * @return 
      */
     public static DeleteNodeResponse deleteNode(DeleteNodeRequest request){
-        if(CoordState.getDataFormat() == null){
-            getDataFormat(request.getCoordUrl());
-        }
+        Map<String, String> params = new HashMap<>();
+        params.put("nodeKey", request.getNodeKey());
         
-        
-        
-        
-        return null;
+        String result = HttpUtil.doPost(request.getCoordUrl() + "/listenNode", params);
+        ServiceResult serviceResult = JSON.parseObject(result, ServiceResult.class);
+        DeleteNodeResponse  deleteNodeResponse= JSON.parseObject(serviceResult.getData().toString(), DeleteNodeResponse.class);
+        return deleteNodeResponse;
     }
     
     /**
@@ -195,13 +194,30 @@ public class CoordServiceUtil {
      * @return 
      */
     public static ListenNodeResponse listenNode(ListenNodeRequest request){
+        Map<String, String> params = new HashMap<>();
+        params.put("nodeKey", request.getNodeKey());
+        params.put("nodePowers", request.getNodePowers());
+        params.put("callbackUrl", request.getCallbackUrl());
         
-        return null;
+        String result = HttpUtil.doPost(request.getCoordUrl() + "/listenNode", params);
+        ServiceResult serviceResult = JSON.parseObject(result, ServiceResult.class);
+        ListenNodeResponse  listenNodeResponse= JSON.parseObject(serviceResult.getData().toString(), ListenNodeResponse.class);
+        return listenNodeResponse;
     }
     
+    /**
+     * 获取节点
+     * @param request
+     * @return 
+     */
     public static NodeResponse getNode(GetNodeRequest request){
+        Map<String, String> params = new HashMap<>();
+        params.put("nodeKey", request.getNodeKey());
         
-        return null;
+        String result = HttpUtil.doPost(request.getCoordUrl() + "/getNode", params);
+        ServiceResult serviceResult = JSON.parseObject(result, ServiceResult.class);
+        NodeResponse nodeResponse = JSON.parseObject(serviceResult.getData().toString(), NodeResponse.class);
+        return nodeResponse;
     } 
 
     /**

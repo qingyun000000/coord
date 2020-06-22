@@ -14,8 +14,6 @@ public class CoordSet {
     
     private static String name;
     
-    private static DataFormat dataFormat;
-    
     private static WorkMode workMode;
     
     private static String groupName;
@@ -40,14 +38,6 @@ public class CoordSet {
 
     public static void setName(String name) {
         CoordSet.name = name;
-    }
-
-    public static DataFormat getDataFormat() {
-        return dataFormat;
-    }
-
-    public static void setDataFormat(DataFormat dataFormat) {
-        CoordSet.dataFormat = dataFormat;
     }
 
     public static WorkMode getWorkMode() {

@@ -1,17 +1,11 @@
-package com.zy.coordc.vo;
+package com.zy.coord.vo;
 
-import com.zy.coordc.enums.NodeType;
 
 /**
  * 客户端注册请求
  * @author wuhailong
  */
 public class RegistRequest {
-    
-    /**
-     * coord服务器地址
-     */
-    private String coordUrl;
     
     /**
      * 组（只有同组的客户端才对组内的数据可见）
@@ -22,15 +16,12 @@ public class RegistRequest {
      * 客户端端口
      */
     private int port;
-
-    public String getCoordUrl() {
-        return coordUrl;
-    }
-
-    public void setCoordUrl(String coordUrl) {
-        this.coordUrl = coordUrl;
-    }
-
+    
+    /**
+     * 客户端地址（带port）
+     */
+    private String clientUrl;
+    
     public String getGroup() {
         return group;
     }
@@ -45,6 +36,14 @@ public class RegistRequest {
 
     public void setPort(int port) {
         this.port = port;
+    }
+
+    public String getClientUrl() {
+        return clientUrl;
+    }
+
+    public void setClientUrl(String clientUrl) {
+        this.clientUrl = clientUrl;
     }
     
 }

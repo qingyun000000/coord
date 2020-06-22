@@ -1,5 +1,7 @@
 package com.zy.coord.initiate;
 
+import com.zy.coord.enums.DataFormat;
+import com.zy.coord.pool.Pool;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -16,7 +18,7 @@ public class CoordInitiate  implements ApplicationListener<ContextRefreshedEvent
     @Value("${zycoord.coord.name:emp}")
     private String name;
     
-    @Value("${zycoord.coord.dataFormat:list}")
+    @Value("${zycoord.coord.dataFormat:tree_node}")
     private String dataFormat;
     
     @Value("${zycoord.coord.work_mode:singleton}")
@@ -28,10 +30,10 @@ public class CoordInitiate  implements ApplicationListener<ContextRefreshedEvent
     @Value("${zycoord.coord.group.mode:}")
     private String groupMode;
     
-    @Value("${zyras.ras.group.regist:emp}")
+    @Value("${zycoord.coord.group.regist:emp}")
     private String registUrls;
     
-    @Value("${zyras.ras.group.syn_time:600}")
+    @Value("${zycoord.coord.group.syn_time:600}")
     private int groupSynTime;
 
     @Override
@@ -40,7 +42,11 @@ public class CoordInitiate  implements ApplicationListener<ContextRefreshedEvent
     }
 
     private void initCoord() {
-        
+        if("key_value".equals(dataFormat)){
+            Pool.setDataFormat(DataFormat.KEY_VALUE);
+        }else{
+            Pool.setDataFormat(DataFormat.TREE_NODE);
+        }
     }
     
 }
