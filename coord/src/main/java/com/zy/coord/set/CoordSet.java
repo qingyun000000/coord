@@ -23,6 +23,11 @@ public class CoordSet {
     private static String registUrls;
     
     private static int groupSynTime;
+    
+    /*
+    * vote模式主机标志
+    */
+    private static boolean mainFlag;
 
     public static int getPort() {
         return port;
@@ -78,6 +83,14 @@ public class CoordSet {
 
     public static void setGroupSynTime(int groupSynTime) {
         CoordSet.groupSynTime = groupSynTime;
+    }
+
+    public static boolean isMainFlag() {
+        return mainFlag;
+    }
+
+    public static void setMainFlag(boolean mainFlag) {
+        CoordSet.mainFlag = mainFlag;
     }
     
 }

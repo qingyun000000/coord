@@ -6,7 +6,6 @@ import cn.whl.commonutils.service.result.ResultParam;
 import cn.whl.commonutils.service.result.ServiceResult;
 import cn.whl.commonutils.service.result.ServiceResultUtils;
 import cn.whl.commonutils.verificate.VerificateUtils;
-import com.zy.coord.service.CoordService;
 import com.zy.coord.vo.CreateNodeRequest;
 import com.zy.coord.vo.DeleteNodeRequest;
 import com.zy.coord.vo.GetNodeRequest;
@@ -18,16 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.zy.coord.service.ClientService;
 
 /**
- * 协调器
+ * 客户端服务
  * @author wuhailong
  */
 @RestController
-public class Controller {
+public class ClientController {
     
     @Autowired
-    private CoordService coordService;
+    private ClientService coordService;
     
     @PostMapping(value = "/regist")
     public ServiceResult regist(RegistRequest registRequest, HttpServletRequest request){

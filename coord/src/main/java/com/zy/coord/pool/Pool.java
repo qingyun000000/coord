@@ -2,22 +2,14 @@ package com.zy.coord.pool;
 
 import cn.whl.commonutils.exception.ExistException;
 import cn.whl.commonutils.exception.NotExistException;
-import cn.whl.commonutils.log.LoggerUtils;
-import cn.whl.commonutils.token.SimpleLongToken;
-import cn.whl.commonutils.token.TokenUtils;
 import com.zy.coord.client.Client;
 import com.zy.coord.client.GroupClient;
 import com.zy.coord.data.DataNode;
 import com.zy.coord.data.GroupData;
 import com.zy.coord.data.TreeDataNode;
 import com.zy.coord.enums.DataFormat;
-import com.zy.coord.set.CoordSet;
-import com.zy.coord.vo.RegistRequest;
-import com.zy.coord.vo.RegistResponse;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * 客户端和数据池
@@ -111,6 +103,34 @@ public class Pool {
             node.setNodeValue(dataNode.getNodeValue());
             groupData.addTreeNode(node);
         }
+        
+        return dataNode;
+    }
+
+    public static DataNode updateNode(Client client, DataNode dataNode) throws NotExistException {
+        //客户端校验
+        verificationClient(client.getGroup(), client.getToken());
+        
+        return dataNode;
+    }
+
+    public static DataNode deleteNode(Client client, DataNode dataNode) throws NotExistException {
+        //客户端校验
+        verificationClient(client.getGroup(), client.getToken());
+        
+        return dataNode;
+    }
+
+    public static DataNode listenNode(Client client, DataNode dataNode) throws NotExistException {
+        //客户端校验
+        verificationClient(client.getGroup(), client.getToken());
+        
+        return dataNode;
+    }
+
+    public static DataNode getNode(Client client, DataNode dataNode) throws NotExistException {
+        //客户端校验
+        verificationClient(client.getGroup(), client.getToken());
         
         return dataNode;
     }

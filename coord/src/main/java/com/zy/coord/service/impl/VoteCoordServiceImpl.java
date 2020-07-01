@@ -2,18 +2,11 @@ package com.zy.coord.service.impl;
 
 import cn.whl.commonutils.exception.ExistException;
 import cn.whl.commonutils.exception.NotExistException;
-import cn.whl.commonutils.log.LoggerUtils;
-import cn.whl.commonutils.token.SimpleLongToken;
-import cn.whl.commonutils.token.TokenUtils;
 import com.zy.coord.client.Client;
-import com.zy.coord.client.GroupClient;
 import com.zy.coord.data.DataNode;
-import com.zy.coord.data.GroupData;
-import com.zy.coord.data.TreeDataNode;
 import com.zy.coord.enums.DataFormat;
 import com.zy.coord.pool.Pool;
-import com.zy.coord.service.CoordService;
-import com.zy.coord.set.CoordSet;
+import com.zy.coord.service.VoteCoordService;
 import com.zy.coord.vo.CreateNodeRequest;
 import com.zy.coord.vo.CreateNodeResponse;
 import com.zy.coord.vo.DeleteNodeRequest;
@@ -28,14 +21,14 @@ import com.zy.coord.vo.RegistRequest;
 import com.zy.coord.vo.RegistResponse;
 import com.zy.coord.vo.UpdateNodeRequest;
 import com.zy.coord.vo.UpdateNodeResponse;
-import java.util.Date;
-import java.util.Random;
+import org.springframework.stereotype.Service;
 
 /**
- * Coord业务层实现
+ * 主Coord业务层实现（请求主服务器）
  * @author wuhailong
  */
-public class CoordServiceImpl implements CoordService{
+@Service
+public class VoteCoordServiceImpl implements VoteCoordService{
 
     @Override
     public RegistResponse regist(RegistRequest registRequest) throws ExistException {
@@ -89,18 +82,11 @@ public class CoordServiceImpl implements CoordService{
 
     @Override
     public UpdateNodeResponse updateNode(UpdateNodeRequest updateNodeRequest) throws NotExistException{
-        //客户端校验
-        verificationClient(updateNodeRequest.getGroup(), updateNodeRequest.getToken());
+        Client client = new Client();
         
-        //获取节点，校验权限
-        if(!Pool.getData().containsKey(updateNodeRequest.getGroup())){
-            throw new NotExistException("组数据");
-        }
+        DataNode dataNode = new DataNode();
         
-        GroupData
-        
-        GroupData groupData = Pool.getData().get(updateNodeRequest.getGroup());
-        DataNode node = groupData.getNode(updateNodeRequest.getNodeKey());
+        DataNode createNode = Pool.updateNode(client, dataNode);
         
         
         UpdateNodeResponse response = new UpdateNodeResponse();
@@ -108,24 +94,41 @@ public class CoordServiceImpl implements CoordService{
     }
 
     @Override
-    public DeleteNodeResponse deleteNode(DeleteNodeRequest deleteNodeRequest) {
+    public DeleteNodeResponse deleteNode(DeleteNodeRequest deleteNodeRequest) throws NotExistException {
         
-        //获取节点
+        Client client = new Client();
         
+        DataNode dataNode = new DataNode();
         
+        DataNode createNode = Pool.deleteNode(client, dataNode);
         
         DeleteNodeResponse response = new DeleteNodeResponse();
         return response;
     }
 
     @Override
-    public ListenNodeResponse listenNode(ListenNodeRequest listenNodeRequest) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ListenNodeResponse listenNode(ListenNodeRequest listenNodeRequest) throws NotExistException {
+        Client client = new Client();
+        
+        DataNode dataNode = new DataNode();
+        
+        DataNode createNode = Pool.listenNode(client, dataNode);
+        
+        ListenNodeResponse response = new ListenNodeResponse();
+        return response;
+            
     }
 
     @Override
-    public NodeResponse getNode(GetNodeRequest nodeRequest) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public NodeResponse getNode(GetNodeRequest nodeRequest) throws NotExistException {
+        Client client = new Client();
+        
+        DataNode dataNode = new DataNode();
+        
+        DataNode createNode = Pool.getNode(client, dataNode);
+        
+        NodeResponse response = new NodeResponse();
+        return response;
     }
     
 }
