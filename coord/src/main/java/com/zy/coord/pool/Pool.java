@@ -8,7 +8,10 @@ import com.zy.coord.data.DataNode;
 import com.zy.coord.data.GroupData;
 import com.zy.coord.data.TreeDataNode;
 import com.zy.coord.enums.DataFormat;
+import com.zy.coord.enums.NodeEvent;
+import com.zy.coord.strategy.ListenStrategyMethod;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,7 +34,7 @@ public class Pool {
      * 组数据
      */
     private static volatile Map<String, GroupData> data = new HashMap<>();
-
+    
     public static DataFormat getDataFormat() {
         return dataFormat;
     }
@@ -75,41 +78,27 @@ public class Pool {
         //客户端校验
         verificationClient(client.getGroup(), client.getToken());
         
-        //获取组数据
-        if(!data.containsKey(client.getGroup())){
-            data.put(client.getGroup(), new GroupData());
-        }
-        GroupData groupData = data.get(client.getGroup());
+        GroupData groupData = getGroupData(client);
         
-        if(dataFormat == DataFormat.KEY_VALUE){
-            groupData.addKeyValueNode(dataNode);
-        }else{
-            TreeDataNode node = new TreeDataNode();
-            node.setNodeType(dataNode.getNodeType());
-            
-            int index = dataNode.getNodeKey().lastIndexOf("/");
-            
-            if(index == 1){
-                node.setParent(new TreeDataNode());
-            }else{
-                TreeDataNode treeNode = (TreeDataNode) groupData.getNode(dataNode.getNodeKey().substring(0, index));
-                if(treeNode == null){
-                    throw new NotExistException("父节点");
-                }
-                node.setParent(treeNode);
-            }
-            
-            node.setNodeKey(dataNode.getNodeKey());
-            node.setNodeValue(dataNode.getNodeValue());
-            groupData.addTreeNode(node);
-        }
+        groupData.addNode(dataNode, client);
         
         return dataNode;
     }
 
+    /**
+     * 修改节点：可修改节点类型和节点值，Key值（包含树形目录的所在位置）不能修改
+     * @param client
+     * @param dataNode
+     * @return
+     * @throws NotExistException
+     */
     public static DataNode updateNode(Client client, DataNode dataNode) throws NotExistException {
         //客户端校验
         verificationClient(client.getGroup(), client.getToken());
+        
+        GroupData groupData = getGroupData(client);
+        
+        groupData.updateDataNode(dataNode, client);
         
         return dataNode;
     }
@@ -118,21 +107,56 @@ public class Pool {
         //客户端校验
         verificationClient(client.getGroup(), client.getToken());
         
-        return dataNode;
-    }
-
-    public static DataNode listenNode(Client client, DataNode dataNode) throws NotExistException {
-        //客户端校验
-        verificationClient(client.getGroup(), client.getToken());
+        GroupData groupData = getGroupData(client);
+        
+        groupData.deleteDataNode(dataNode, client);
         
         return dataNode;
     }
 
-    public static DataNode getNode(Client client, DataNode dataNode) throws NotExistException {
+    public static DataNode listenNode(Client client, DataNode dataNode, List<NodeEvent> events) throws NotExistException {
         //客户端校验
         verificationClient(client.getGroup(), client.getToken());
         
+        GroupData groupData = getGroupData(client);
+        
+        groupData.listenDataNode(dataNode, client, events);
+        
         return dataNode;
+    }
+
+    public static DataNode getNode(Client client, String nodeKey) throws NotExistException {
+        //客户端校验
+        verificationClient(client.getGroup(), client.getToken());
+        
+        GroupData groupData = getGroupData(client);
+        
+        DataNode node = groupData.getNode(nodeKey, client);
+        
+        return node;
+    }
+
+    /**
+     * 获取主数据
+     * @param client
+     * @return 
+     */
+    private static GroupData getGroupData(Client client) {
+        //获取组数据
+        if(!data.containsKey(client.getGroup())){
+            GroupData groupData = new GroupData();
+            groupData.setListenMethod(() ->listenCallback());
+            data.put(client.getGroup(), groupData);
+        }
+        GroupData groupData = data.get(client.getGroup());
+        return groupData;
+    }
+
+    /**
+     * 回调方法
+     */
+    private static void listenCallback() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -29,7 +29,7 @@ public class DataNodePower {
     /**
      * 白名单或者黑名单
      */
-    private List<Client> clients;
+    private List<String> clients;
 
     public DataNode getNode() {
         return node;
@@ -55,11 +55,11 @@ public class DataNodePower {
         this.mode = mode;
     }
 
-    public List<Client> getClients() {
+    public List<String> getClients() {
         return clients;
     }
 
-    public void setClients(List<Client> clients) {
+    public void setClients(List<String> clients) {
         this.clients = clients;
     }
     

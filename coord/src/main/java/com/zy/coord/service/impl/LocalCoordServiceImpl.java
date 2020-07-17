@@ -5,6 +5,7 @@ import cn.whl.commonutils.exception.NotExistException;
 import com.zy.coord.client.Client;
 import com.zy.coord.data.DataNode;
 import com.zy.coord.enums.DataFormat;
+import com.zy.coord.enums.NodeEvent;
 import com.zy.coord.pool.Pool;
 import com.zy.coord.service.LocalCoordService;
 import com.zy.coord.vo.CreateNodeRequest;
@@ -21,6 +22,8 @@ import com.zy.coord.vo.RegistRequest;
 import com.zy.coord.vo.RegistResponse;
 import com.zy.coord.vo.UpdateNodeRequest;
 import com.zy.coord.vo.UpdateNodeResponse;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -112,7 +115,9 @@ public class LocalCoordServiceImpl implements LocalCoordService{
         
         DataNode dataNode = new DataNode();
         
-        DataNode createNode = Pool.listenNode(client, dataNode);
+        List<NodeEvent> events = new ArrayList<>();
+        
+        DataNode createNode = Pool.listenNode(client, dataNode, events);
         
         ListenNodeResponse response = new ListenNodeResponse();
         return response;
@@ -123,9 +128,7 @@ public class LocalCoordServiceImpl implements LocalCoordService{
     public NodeResponse getNode(GetNodeRequest nodeRequest) throws NotExistException {
         Client client = new Client();
         
-        DataNode dataNode = new DataNode();
-        
-        DataNode createNode = Pool.getNode(client, dataNode);
+        DataNode dataNode = Pool.getNode(client, nodeRequest.getNodeKey());
         
         NodeResponse response = new NodeResponse();
         return response;

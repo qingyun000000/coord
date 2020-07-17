@@ -100,7 +100,6 @@ public class VoteCoordServiceImpl implements VoteCoordService{
         
         DataNode dataNode = new DataNode();
         
-        DataNode createNode = Pool.deleteNode(client, dataNode);
         
         DeleteNodeResponse response = new DeleteNodeResponse();
         return response;
@@ -111,8 +110,6 @@ public class VoteCoordServiceImpl implements VoteCoordService{
         Client client = new Client();
         
         DataNode dataNode = new DataNode();
-        
-        DataNode createNode = Pool.listenNode(client, dataNode);
         
         ListenNodeResponse response = new ListenNodeResponse();
         return response;
@@ -125,7 +122,6 @@ public class VoteCoordServiceImpl implements VoteCoordService{
         
         DataNode dataNode = new DataNode();
         
-        DataNode createNode = Pool.getNode(client, dataNode);
         
         NodeResponse response = new NodeResponse();
         return response;

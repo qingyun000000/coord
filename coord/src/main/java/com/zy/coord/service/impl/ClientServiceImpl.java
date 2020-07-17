@@ -2,6 +2,7 @@ package com.zy.coord.service.impl;
 
 import cn.whl.commonutils.exception.ExistException;
 import cn.whl.commonutils.exception.NotExistException;
+import cn.whl.commonutils.exception.ServiceRunException;
 import com.zy.coord.enums.DataFormat;
 import com.zy.coord.enums.GroupMode;
 import com.zy.coord.enums.WorkMode;
@@ -48,7 +49,7 @@ public class ClientServiceImpl implements ClientService{
     private RedisCoordService redisCoordService;
 
     @Override
-    public RegistResponse regist(RegistRequest registRequest) throws ExistException {
+    public RegistResponse regist(RegistRequest registRequest) throws ExistException, ServiceRunException {
         if(CoordSet.getWorkMode() == WorkMode.GROUP){
             if(CoordSet.getGroupMode() == GroupMode.DB){
                 return dbCoordService.regist(registRequest);
@@ -56,16 +57,18 @@ public class ClientServiceImpl implements ClientService{
                 return redisCoordService.regist(registRequest);
             }else if(CoordSet.getGroupMode() == GroupMode.VOTE){
                 return voteCoordService.regist(registRequest);
+            }else{
+                throw new ServiceRunException("groupMode配置错误");
             }
         }else if(CoordSet.getWorkMode() == WorkMode.SINGLETON){
             return localCoordService.regist(registRequest);
+        }else{
+            throw new ServiceRunException("workMode配置错误");
         }
-        
-        return null;
     }
 
     @Override
-    public HeartbeatResponse heartbeat(HeartbeatRequest heartbeatRequest) throws NotExistException {
+    public HeartbeatResponse heartbeat(HeartbeatRequest heartbeatRequest) throws NotExistException, ServiceRunException {
         if(CoordSet.getWorkMode() == WorkMode.GROUP){
             if(CoordSet.getGroupMode() == GroupMode.DB){
                 return dbCoordService.heartbeat(heartbeatRequest);
@@ -73,16 +76,18 @@ public class ClientServiceImpl implements ClientService{
                 return redisCoordService.heartbeat(heartbeatRequest);
             }else if(CoordSet.getGroupMode() == GroupMode.VOTE){
                 return voteCoordService.heartbeat(heartbeatRequest);
+            }else{
+                throw new ServiceRunException("groupMode配置错误");
             }
         }else if(CoordSet.getWorkMode() == WorkMode.SINGLETON){
             return localCoordService.heartbeat(heartbeatRequest);
+        }else{
+            throw new ServiceRunException("workMode配置错误");
         }
-        
-        return null;
     }
 
     @Override
-    public DataFormat getDataFormat() {
+    public DataFormat getDataFormat() throws ServiceRunException {
         if(CoordSet.getWorkMode() == WorkMode.GROUP){
             if(CoordSet.getGroupMode() == GroupMode.DB){
                 return dbCoordService.getDataFormat();
@@ -90,16 +95,18 @@ public class ClientServiceImpl implements ClientService{
                 return redisCoordService.getDataFormat();
             }else if(CoordSet.getGroupMode() == GroupMode.VOTE){
                 return voteCoordService.getDataFormat();
+            }else{
+                throw new ServiceRunException("groupMode配置错误");
             }
         }else if(CoordSet.getWorkMode() == WorkMode.SINGLETON){
             return localCoordService.getDataFormat();
+        }else{
+            throw new ServiceRunException("workMode配置错误");
         }
-        
-        return null;
     }
 
     @Override
-    public CreateNodeResponse createNode(CreateNodeRequest createNodeRequest) throws NotExistException, ExistException {
+    public CreateNodeResponse createNode(CreateNodeRequest createNodeRequest) throws NotExistException, ExistException, ServiceRunException {
         if(CoordSet.getWorkMode() == WorkMode.GROUP){
             if(CoordSet.getGroupMode() == GroupMode.DB){
                 return dbCoordService.createNode(createNodeRequest);
@@ -107,18 +114,20 @@ public class ClientServiceImpl implements ClientService{
                 return redisCoordService.createNode(createNodeRequest);
             }else if(CoordSet.getGroupMode() == GroupMode.VOTE){
                 return voteCoordService.createNode(createNodeRequest);
+            }else{
+                throw new ServiceRunException("groupMode配置错误");
             }
         }else if(CoordSet.getWorkMode() == WorkMode.SINGLETON){
             return localCoordService.createNode(createNodeRequest);
+        }else{
+            throw new ServiceRunException("workMode配置错误");
         }
-        
-        return null;
     }
 
     
 
     @Override
-    public UpdateNodeResponse updateNode(UpdateNodeRequest updateNodeRequest) throws NotExistException{
+    public UpdateNodeResponse updateNode(UpdateNodeRequest updateNodeRequest) throws NotExistException, ServiceRunException{
         if(CoordSet.getWorkMode() == WorkMode.GROUP){
             if(CoordSet.getGroupMode() == GroupMode.DB){
                 return dbCoordService.updateNode(updateNodeRequest);
@@ -126,16 +135,18 @@ public class ClientServiceImpl implements ClientService{
                 return redisCoordService.updateNode(updateNodeRequest);
             }else if(CoordSet.getGroupMode() == GroupMode.VOTE){
                 return voteCoordService.updateNode(updateNodeRequest);
+            }else{
+                throw new ServiceRunException("groupMode配置错误");
             }
         }else if(CoordSet.getWorkMode() == WorkMode.SINGLETON){
             return localCoordService.updateNode(updateNodeRequest);
+        }else{
+            throw new ServiceRunException("workMode配置错误");
         }
-        
-        return null;
     }
 
     @Override
-    public DeleteNodeResponse deleteNode(DeleteNodeRequest deleteNodeRequest) throws NotExistException {
+    public DeleteNodeResponse deleteNode(DeleteNodeRequest deleteNodeRequest) throws NotExistException, ServiceRunException {
         if(CoordSet.getWorkMode() == WorkMode.GROUP){
             if(CoordSet.getGroupMode() == GroupMode.DB){
                 return dbCoordService.deleteNode(deleteNodeRequest);
@@ -143,16 +154,18 @@ public class ClientServiceImpl implements ClientService{
                 return redisCoordService.deleteNode(deleteNodeRequest);
             }else if(CoordSet.getGroupMode() == GroupMode.VOTE){
                 return voteCoordService.deleteNode(deleteNodeRequest);
+            }else{
+                throw new ServiceRunException("groupMode配置错误");
             }
         }else if(CoordSet.getWorkMode() == WorkMode.SINGLETON){
             return localCoordService.deleteNode(deleteNodeRequest);
+        }else{
+            throw new ServiceRunException("workMode配置错误");
         }
-        
-        return null;
     }
 
     @Override
-    public ListenNodeResponse listenNode(ListenNodeRequest listenNodeRequest) throws NotExistException {
+    public ListenNodeResponse listenNode(ListenNodeRequest listenNodeRequest) throws NotExistException, ServiceRunException {
         if(CoordSet.getWorkMode() == WorkMode.GROUP){
             if(CoordSet.getGroupMode() == GroupMode.DB){
                 return dbCoordService.listenNode(listenNodeRequest);
@@ -160,17 +173,18 @@ public class ClientServiceImpl implements ClientService{
                 return redisCoordService.listenNode(listenNodeRequest);
             }else if(CoordSet.getGroupMode() == GroupMode.VOTE){
                 return voteCoordService.listenNode(listenNodeRequest);
+            }else{
+                throw new ServiceRunException("groupMode配置错误");
             }
         }else if(CoordSet.getWorkMode() == WorkMode.SINGLETON){
             return localCoordService.listenNode(listenNodeRequest);
+        }else{
+            throw new ServiceRunException("workMode配置错误");
         }
-        
-        return null;
-            
     }
 
     @Override
-    public NodeResponse getNode(GetNodeRequest nodeRequest) throws NotExistException {
+    public NodeResponse getNode(GetNodeRequest nodeRequest) throws NotExistException, ServiceRunException {
         if(CoordSet.getWorkMode() == WorkMode.GROUP){
             if(CoordSet.getGroupMode() == GroupMode.DB){
                 return dbCoordService.getNode(nodeRequest);
@@ -178,12 +192,14 @@ public class ClientServiceImpl implements ClientService{
                 return redisCoordService.getNode(nodeRequest);
             }else if(CoordSet.getGroupMode() == GroupMode.VOTE){
                 return voteCoordService.getNode(nodeRequest);
+            }else{
+                throw new ServiceRunException("groupMode配置错误");
             }
         }else if(CoordSet.getWorkMode() == WorkMode.SINGLETON){
             return localCoordService.getNode(nodeRequest);
+        }else{
+            throw new ServiceRunException("workMode配置错误");
         }
-        
-        return null;
     }
     
 }

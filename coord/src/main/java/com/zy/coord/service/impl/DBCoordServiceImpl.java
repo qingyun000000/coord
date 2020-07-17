@@ -112,7 +112,6 @@ public class DBCoordServiceImpl implements DBCoordService{
         
         DataNode dataNode = new DataNode();
         
-        DataNode createNode = Pool.listenNode(client, dataNode);
         
         ListenNodeResponse response = new ListenNodeResponse();
         return response;
@@ -125,7 +124,6 @@ public class DBCoordServiceImpl implements DBCoordService{
         
         DataNode dataNode = new DataNode();
         
-        DataNode createNode = Pool.getNode(client, dataNode);
         
         NodeResponse response = new NodeResponse();
         return response;

@@ -9,11 +9,6 @@ import java.util.List;
 public class TreeDataNode extends DataNode{
     
     /**
-     * 树型目录
-     */
-    private String index;
-    
-    /**
      * 父节点key
      */
     private TreeDataNode parent;
@@ -22,14 +17,6 @@ public class TreeDataNode extends DataNode{
      * 子节点key
      */
     private List<TreeDataNode> children;
-
-    public String getIndex() {
-        return index;
-    }
-
-    public void setIndex(String index) {
-        this.index = index;
-    }
 
     public TreeDataNode getParent() {
         return parent;

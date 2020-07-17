@@ -5,5 +5,5 @@ package com.zy.coord.enums;
  * @author wuhailong
  */
 public enum NodePower {
-    CREATE, UPDATE, DELETE, READ, MOVE, READCHILDREN, CREATECHILD
+    CREATE, UPDATE, DELETE, READ, READCHILDREN, CREATECHILD
 }
