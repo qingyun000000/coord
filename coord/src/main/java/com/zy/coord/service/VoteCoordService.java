@@ -20,7 +20,7 @@ import com.zy.coord.vo.UpdateNodeRequest;
 import com.zy.coord.vo.UpdateNodeResponse;
 
 /**
- * 主Coord业务层接口（请求主服务器）
+ * 选举Coord业务层接口（请求主服务器）
  * @author wuhailong
  */
 public interface VoteCoordService {

@@ -24,7 +24,7 @@ import com.zy.coord.vo.UpdateNodeResponse;
 import org.springframework.stereotype.Service;
 
 /**
- * 本地Coord业务层实现（用于单机工作）
+ * 数据库同步Coord业务层实现
  * @author wuhailong
  */
 @Service

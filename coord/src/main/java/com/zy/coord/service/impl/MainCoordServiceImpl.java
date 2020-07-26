@@ -6,7 +6,9 @@ import com.zy.coord.client.Client;
 import com.zy.coord.data.DataNode;
 import com.zy.coord.enums.DataFormat;
 import com.zy.coord.pool.Pool;
-import com.zy.coord.service.RedisCoordService;
+import com.zy.coord.service.MainCoordService;
+import com.zy.coord.service.VoteCoordService;
+import com.zy.coord.set.CoordSet;
 import com.zy.coord.vo.CreateNodeRequest;
 import com.zy.coord.vo.CreateNodeResponse;
 import com.zy.coord.vo.DeleteNodeRequest;
@@ -21,29 +23,22 @@ import com.zy.coord.vo.RegistRequest;
 import com.zy.coord.vo.RegistResponse;
 import com.zy.coord.vo.UpdateNodeRequest;
 import com.zy.coord.vo.UpdateNodeResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Redis同步Coord业务层实现
+ * 主Coord业务层实现
  * @author wuhailong
  */
 @Service
-public class RedisCoordServiceImpl implements RedisCoordService{
-
+public class MainCoordServiceImpl implements MainCoordService{
+   
     @Override
     public RegistResponse regist(RegistRequest registRequest) throws ExistException {
-        Client client = new Client();
-        client.setGroup(registRequest.getGroup());
-        client.setClientUrl(registRequest.getClientUrl());
-        
-        Client registClient = Pool.registClient(client);
-        
-        RegistResponse response = new RegistResponse();
-        response.setGroup(registClient.getGroup());
-        response.setRegistDate(registClient.getRegistDate());
-        response.setToken(registClient.getToken());
-        response.setUniName(registClient.getUniName());
-        return response;
+        if(CoordSet.isMainFlag() == false){
+            
+        }
+        return null;
     }
 
     @Override
@@ -100,7 +95,6 @@ public class RedisCoordServiceImpl implements RedisCoordService{
         
         DataNode dataNode = new DataNode();
         
-        DataNode createNode = Pool.deleteNode(client, dataNode);
         
         DeleteNodeResponse response = new DeleteNodeResponse();
         return response;
@@ -111,7 +105,6 @@ public class RedisCoordServiceImpl implements RedisCoordService{
         Client client = new Client();
         
         DataNode dataNode = new DataNode();
-        
         
         ListenNodeResponse response = new ListenNodeResponse();
         return response;

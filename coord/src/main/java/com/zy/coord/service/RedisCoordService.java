@@ -20,7 +20,7 @@ import com.zy.coord.vo.UpdateNodeRequest;
 import com.zy.coord.vo.UpdateNodeResponse;
 
 /**
- * 主Coord业务层接口（用于主机）
+ * Redis同步Coord业务层接口
  * @author wuhailong
  */
 public interface RedisCoordService {

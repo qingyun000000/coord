@@ -20,10 +20,10 @@ import com.zy.coord.vo.UpdateNodeRequest;
 import com.zy.coord.vo.UpdateNodeResponse;
 
 /**
- * 主服务器业务层接口
+ * 主Coord业务层接口
  * @author wuhailong
  */
-public interface GroupService {
+public interface MainCoordService {
 
     /**
      * 客户端注册
