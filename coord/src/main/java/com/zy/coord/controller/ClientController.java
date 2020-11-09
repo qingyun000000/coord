@@ -27,7 +27,7 @@ import com.zy.coord.service.ClientService;
 public class ClientController {
     
     @Autowired
-    private ClientService coordService;
+    private ClientService clientService;
     
     @PostMapping(value = "/regist")
     public ServiceResult regist(RegistRequest registRequest, HttpServletRequest request){
@@ -35,62 +35,62 @@ public class ClientController {
             if(VerificateUtils.isEmpty(registRequest.getGroup())){throw new InputNullException("客户组");}
             if(registRequest.getPort() < 1){throw new InputWrongException("客户端口");}
             registRequest.setClientUrl("http://" + request.getRemoteAddr() + ":" + registRequest.getPort());
-        }, () -> coordService.regist(registRequest));
+        }, () -> clientService.regist(registRequest));
         return result;
     }
        
     @PostMapping(value = "/heartbeat")
     public ServiceResult heartbeat(HeartbeatRequest heartbeatRequest, HttpServletRequest request){
         ServiceResult result = ServiceResultUtils.action(ResultParam.Data, ()->{
-        }, () -> coordService.heartbeat(heartbeatRequest));
+        }, () -> clientService.heartbeat(heartbeatRequest));
         return result;
     }
     
     @PostMapping(value = "/dateFormat")
     public ServiceResult dateFormat(){
-        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> coordService.getDataFormat());
+        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> clientService.getDataFormat());
         return result;
     }
     
     @PostMapping(value = "/createNode")
     public ServiceResult createNode(CreateNodeRequest createNodeRequest, HttpServletRequest request){
-        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> coordService.createNode(createNodeRequest));
+        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> clientService.createNode(createNodeRequest));
         return result;
     }
     
     @PostMapping(value = "/createStandingNode")
     public ServiceResult createStandingNode(CreateNodeRequest createNodeRequest, HttpServletRequest request){
-        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> coordService.createNode(createNodeRequest));
+        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> clientService.createNode(createNodeRequest));
         return result;
     }
     
     @PostMapping(value = "/createTemporaryNode")
     public ServiceResult createTemporaryNode(CreateNodeRequest createNodeRequest, HttpServletRequest request){
-        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> coordService.createNode(createNodeRequest));
+        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> clientService.createNode(createNodeRequest));
         return result;
     }
     
     @PostMapping(value = "/updateNode")
     public ServiceResult updateNode(UpdateNodeRequest updateNodeRequest, HttpServletRequest request){
-        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> coordService.updateNode(updateNodeRequest));
+        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> clientService.updateNode(updateNodeRequest));
         return result;
     }
     
     @PostMapping(value = "/deleteNode")
     public ServiceResult deleteNode(DeleteNodeRequest deleteNodeRequest, HttpServletRequest request){
-        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> coordService.deleteNode(deleteNodeRequest));
+        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> clientService.deleteNode(deleteNodeRequest));
         return result;
     }
     
     @PostMapping(value = "/listenNode")
     public ServiceResult listenNode(ListenNodeRequest listenNodeRequest, HttpServletRequest request){
-        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> coordService.listenNode(listenNodeRequest));
+        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> clientService.listenNode(listenNodeRequest));
         return result;
     }
     
     @PostMapping(value = "/getNode")
     public ServiceResult getNode(GetNodeRequest getNodeRequest, HttpServletRequest request){
-        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> coordService.getNode(getNodeRequest));
+        ServiceResult result = ServiceResultUtils.action(ResultParam.Data, () -> clientService.getNode(getNodeRequest));
         return result;
     }
 } 

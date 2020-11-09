@@ -3,6 +3,7 @@ package com.zy.coord.service.impl;
 import cn.whl.commonutils.exception.ExistException;
 import cn.whl.commonutils.exception.NotExistException;
 import cn.whl.commonutils.exception.ServiceRunException;
+import com.zy.coord.client.GroupClient;
 import com.zy.coord.enums.DataFormat;
 import com.zy.coord.enums.GroupMode;
 import com.zy.coord.enums.WorkMode;
@@ -26,6 +27,7 @@ import com.zy.coord.vo.RegistRequest;
 import com.zy.coord.vo.RegistResponse;
 import com.zy.coord.vo.UpdateNodeRequest;
 import com.zy.coord.vo.UpdateNodeResponse;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -197,6 +199,17 @@ public class ClientServiceImpl implements ClientService{
             }
         }else if(CoordSet.getWorkMode() == WorkMode.SINGLETON){
             return localCoordService.getNode(nodeRequest);
+        }else{
+            throw new ServiceRunException("workMode配置错误");
+        }
+    }
+
+    @Override
+    public Map<String, GroupClient> getClients() throws NotExistException, ServiceRunException{
+        if(CoordSet.getWorkMode() == WorkMode.GROUP){
+            return null;
+        }else if(CoordSet.getWorkMode() == WorkMode.SINGLETON){
+            return localCoordService.getClients();
         }else{
             throw new ServiceRunException("workMode配置错误");
         }

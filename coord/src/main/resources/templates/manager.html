@@ -20,10 +20,18 @@
         <div style="margin-left: 10%;margin-top: 50px;width: 80%;">
             <h3 style="color: blue;margin-left: 2%;">客户端管理</h3>
             <hr style="color: #cccccc"/>
+            <div th:each="group : ${clients}">
+                <h4>组：<span th:text="${group.key}"></span></h4>
+                <p th:each="entry : ${group.value.clients}" style="margin-left: 5%;">
+                    <span th:text="${entry.value.uniName}"></span>
+                    <span th:text="${entry.value.clientUrl}"></span>
+                </p>
+            </div>
         </div>
         <div style="margin-left: 10%;margin-top: 50px;width: 80%;">
             <h3 style="color: blue;margin-left: 2%;">数据管理</h3>
             <hr style="color: #cccccc"/>
+            <h4>数据类型：<span th:text="${dataFormat}"></span></h4>
         </div>
         <div style="margin-left: 10%;width: 80%;background:#cccccc">
             <h1 style="color: blue;margin-left: 10%;margin-top: 10px;line-height: 80px;">&nbsp;</h1>

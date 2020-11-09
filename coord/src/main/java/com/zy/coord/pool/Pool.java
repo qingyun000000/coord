@@ -159,4 +159,8 @@ public class Pool {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public static Map<String, GroupClient> getClients() {
+        return clients;
+    }
+
 }

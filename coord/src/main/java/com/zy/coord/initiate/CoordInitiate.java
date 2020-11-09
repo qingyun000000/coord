@@ -1,15 +1,19 @@
 package com.zy.coord.initiate;
 
 import com.zy.coord.enums.DataFormat;
+import com.zy.coord.enums.WorkMode;
 import com.zy.coord.pool.Pool;
+import com.zy.coord.set.CoordSet;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
 /**
  * 协调器配置初始化
  * @author wuhailong
  */
+@Component
 public class CoordInitiate  implements ApplicationListener<ContextRefreshedEvent>{
     
     @Value("${server.port:8080}")
@@ -42,6 +46,12 @@ public class CoordInitiate  implements ApplicationListener<ContextRefreshedEvent
     }
 
     private void initCoord() {
+        System.out.println("初始化");
+        if("singleton".equals(workMode)){
+            CoordSet.setWorkMode(WorkMode.SINGLETON);
+        }else{
+            CoordSet.setWorkMode(WorkMode.GROUP);
+        }
         if("key_value".equals(dataFormat)){
             Pool.setDataFormat(DataFormat.KEY_VALUE);
         }else{

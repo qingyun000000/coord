@@ -4,6 +4,7 @@ import cn.whl.commonutils.exception.ExistException;
 import cn.whl.commonutils.exception.NotExistException;
 import cn.whl.commonutils.exception.ServiceRunException;
 import cn.whl.commonutils.service.result.ServiceResult;
+import com.zy.coord.client.GroupClient;
 import com.zy.coord.enums.DataFormat;
 import com.zy.coord.vo.CreateNodeRequest;
 import com.zy.coord.vo.CreateNodeResponse;
@@ -19,6 +20,7 @@ import com.zy.coord.vo.RegistRequest;
 import com.zy.coord.vo.RegistResponse;
 import com.zy.coord.vo.UpdateNodeRequest;
 import com.zy.coord.vo.UpdateNodeResponse;
+import java.util.Map;
 
 /**
  * Coord业务层接口
@@ -96,6 +98,8 @@ public interface ClientService {
      * @throws cn.whl.commonutils.exception.ServiceRunException 
      */
     public NodeResponse getNode(GetNodeRequest nodeRequest) throws NotExistException, ServiceRunException;
+
+    public Map<String, GroupClient> getClients() throws NotExistException, ServiceRunException;
 
     
     
